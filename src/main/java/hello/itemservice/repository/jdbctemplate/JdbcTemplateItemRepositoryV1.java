@@ -74,7 +74,6 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
 	public List<Item> findAll(ItemSearchCond cond) {
 		String itemName = cond.getItemName();
 		Integer maxPrice = cond.getMaxPrice();
-
 		String sql = "select id, item_name, price, quantity from item";
 		//동적 쿼리
 		if (StringUtils.hasText(itemName) || maxPrice != null) {
@@ -96,7 +95,7 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
 			param.add(maxPrice);
 		}
 		log.info("sql={}", sql);
-		return template.query(sql, itemRowMapper(), param);
+		return template.query(sql, itemRowMapper(), param.toArray());
 	}
 
 	private RowMapper<Item> itemRowMapper() {
